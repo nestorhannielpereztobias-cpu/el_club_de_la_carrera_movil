@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 28,
-                  fontWeight: FontWeight.black,
+                  fontWeight: FontWeight.w900,
                   color: darkBlue,
                   letterSpacing: 1.2,
                 ),
@@ -55,13 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(16.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 15,
                       offset: const Offset(0, 5),
                     ),
                   ],
                   border: Border.all(
-                    color: primaryBlue.withOpacity(0.3),
+                    color: primaryBlue.withValues(alpha: 0.3),
                     width: 1,
                   ),
                 ),
