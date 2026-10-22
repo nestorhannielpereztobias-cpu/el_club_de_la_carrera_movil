@@ -35,63 +35,80 @@ class HomeAtletaView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Tarjeta de bienvenida
+              // Tarjeta de bienvenida interactiva (lleva a PerfilUsuarioView)
               Card(
                 elevation: 2,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  color: Colors.deepOrange.shade50,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => PerfilUsuarioView(usuario: usuario),
-                        ),
-                      );
-                    },
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.deepOrange,
-                        child: Text(
-                          usuario.nombre.isNotEmpty ? usuario.nombre[0].toUpperCase() : 'A',
-                          style: const TextStyle(fontSize: 26, color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                color: Colors.deepOrange.shade50,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => PerfilUsuarioView(usuario: usuario),
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '¡Hola, ${usuario.nombre}!',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.deepOrange,
+                          child: Text(
+                            usuario.nombre.isNotEmpty
+                                ? usuario.nombre[0].toUpperCase()
+                                : 'A',
+                            style: const TextStyle(
+                              fontSize: 26,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Rol: ${usuario.rol.toUpperCase()}',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.deepOrange.shade800,
-                              ),
-                            ),
-                            Text(
-                              usuario.correo,
-                              style: const TextStyle(fontSize: 12, color: Colors.grey),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '¡Hola, ${usuario.nombre}!',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Rol: ${usuario.rol.toUpperCase()}',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.deepOrange.shade800,
+                                ),
+                              ),
+                              Text(
+                                usuario.correo,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 18,
+                          color: Colors.deepOrange,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -103,7 +120,7 @@ class HomeAtletaView extends StatelessWidget {
               ),
               const SizedBox(height: 14),
 
-              // Botones de las funcionalidades clave que siguen
+              // Botones de las funcionalidades clave
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 2,
@@ -116,7 +133,9 @@ class HomeAtletaView extends StatelessWidget {
                       color: Colors.blue,
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Próximamente: Formulario de Registro')),
+                          const SnackBar(
+                            content: Text('Próximamente: Formulario de Registro'),
+                          ),
                         );
                       },
                     ),
@@ -126,7 +145,9 @@ class HomeAtletaView extends StatelessWidget {
                       color: Colors.purple,
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Próximamente: Historial de Entrenamientos')),
+                          const SnackBar(
+                            content: Text('Próximamente: Historial de Entrenamientos'),
+                          ),
                         );
                       },
                     ),
@@ -136,7 +157,9 @@ class HomeAtletaView extends StatelessWidget {
                       color: Colors.teal,
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Próximamente: Diagnóstico')),
+                          const SnackBar(
+                            content: Text('Próximamente: Diagnóstico'),
+                          ),
                         );
                       },
                     ),
@@ -146,7 +169,9 @@ class HomeAtletaView extends StatelessWidget {
                       color: Colors.orange,
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Próximamente: Buscar Planes')),
+                          const SnackBar(
+                            content: Text('Próximamente: Buscar Planes'),
+                          ),
                         );
                       },
                     ),
