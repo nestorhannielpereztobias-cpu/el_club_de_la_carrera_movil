@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+// ignore: unused_import
 import '../models/usuario_model.dart';
 import 'home_atleta_view.dart';
 import 'registro_view.dart';

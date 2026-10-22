@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/usuario_model.dart';
 import 'login_view.dart';
+import 'perfil_usuario_view.dart';
 
 class HomeAtletaView extends StatelessWidget {
   final UsuarioModel usuario;
@@ -37,10 +38,18 @@ class HomeAtletaView extends StatelessWidget {
               // Tarjeta de bienvenida
               Card(
                 elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                color: Colors.deepOrange.shade50,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  color: Colors.deepOrange.shade50,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PerfilUsuarioView(usuario: usuario),
+                        ),
+                      );
+                    },
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Row(
