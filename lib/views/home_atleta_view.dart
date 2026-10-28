@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import '../models/usuario_model.dart';
+import 'consultar_entrenamientos_view.dart';
 import 'login_view.dart';
 import 'perfil_usuario_view.dart';
+import 'registrar_entrenamiento_view.dart';
 
 class HomeAtletaView extends StatelessWidget {
   final UsuarioModel usuario;
@@ -132,9 +135,12 @@ class HomeAtletaView extends StatelessWidget {
                       title: 'Registrar\nEntrenamiento',
                       color: Colors.blue,
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Próximamente: Formulario de Registro'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegistrarEntrenamientoView(
+                              idUsuario: usuario.idUsuario,
+                            ),
                           ),
                         );
                       },
@@ -144,9 +150,12 @@ class HomeAtletaView extends StatelessWidget {
                       title: 'Consultar\nEntrenamientos',
                       color: Colors.purple,
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Próximamente: Historial de Entrenamientos'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConsultarEntrenamientosView(
+                              idUsuario: usuario.idUsuario,
+                            ),
                           ),
                         );
                       },
@@ -204,14 +213,17 @@ class HomeAtletaView extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 26,
-                backgroundColor: color.withOpacity(0.15),
+                backgroundColor: color.withValues(alpha: 0.15),
                 child: Icon(icon, size: 28, color: color),
               ),
               const SizedBox(height: 12),
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
               ),
             ],
           ),
