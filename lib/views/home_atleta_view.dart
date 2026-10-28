@@ -5,6 +5,8 @@ import 'consultar_entrenamientos_view.dart';
 import 'login_view.dart';
 import 'perfil_usuario_view.dart';
 import 'registrar_entrenamiento_view.dart';
+import 'cuestionario_diagnostico_view.dart';
+import 'mi_plan_view.dart';
 
 class HomeAtletaView extends StatelessWidget {
   final UsuarioModel usuario;
@@ -165,21 +167,26 @@ class HomeAtletaView extends StatelessWidget {
                       title: 'Cuestionario\nDiagnóstico',
                       color: Colors.teal,
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Próximamente: Diagnóstico'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CuestionarioDiagnosticoView(
+                              idUsuario: usuario.idUsuario,
+                            ),
                           ),
                         );
                       },
                     ),
                     _buildMenuCard(
-                      icon: Icons.explore_outlined,
-                      title: 'Catálogo de\nPlanes',
+                      icon: Icons.fitness_center_rounded,
+                      title: 'Mi Plan de\nEntrenamiento',
                       color: Colors.orange,
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Próximamente: Buscar Planes'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                MiPlanView(idUsuario: usuario.idUsuario),
                           ),
                         );
                       },
