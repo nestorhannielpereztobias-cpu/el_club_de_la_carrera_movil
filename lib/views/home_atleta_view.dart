@@ -7,6 +7,7 @@ import 'perfil_usuario_view.dart';
 import 'registrar_entrenamiento_view.dart';
 import 'cuestionario_diagnostico_view.dart';
 import 'mi_plan_view.dart';
+import 'consultar_respuestas_diagnostico_view.dart';
 
 class HomeAtletaView extends StatelessWidget {
   final UsuarioModel usuario;
@@ -171,6 +172,21 @@ class HomeAtletaView extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => CuestionarioDiagnosticoView(
+                              idUsuario: usuario.idUsuario,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuCard(
+                      icon: Icons.assignment_outlined,
+                      title: 'Consultar\nDiagnóstico',
+                      color: Colors.teal,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ConsultarRespuestasDiagnosticoView(
                               idUsuario: usuario.idUsuario,
                             ),
                           ),
