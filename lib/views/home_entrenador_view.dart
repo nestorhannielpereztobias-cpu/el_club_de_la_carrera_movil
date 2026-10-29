@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/usuario_model.dart';
 import 'login_view.dart';
 import 'perfil_usuario_view.dart';
+import 'lista_atletas_view.dart';
+
 
 class HomeEntrenadorView extends StatelessWidget {
   final UsuarioModel usuario;
@@ -110,6 +112,19 @@ class HomeEntrenadorView extends StatelessWidget {
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Próximamente: Lista de atletas')),
+                        );
+                      },
+                    ),
+                    _buildMenuCard(
+                      icon: Icons.groups_rounded,
+                      title: 'Mis\nAtletas',
+                      color: Colors.teal,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ListaAtletasView(),
+                          ),
                         );
                       },
                     ),

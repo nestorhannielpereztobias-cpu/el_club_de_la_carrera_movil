@@ -20,4 +20,15 @@ class EntrenamientoService {
     final lista = response as List<dynamic>;
     return lista.map((map) => EntrenamientoModel.fromMap(map as Map<String, dynamic>)).toList();
   }
+
+  Future<List<UsuarioModel>> obtenerAtletas() async {
+    final response = await _supabase
+        .from('usuario')
+        .select()
+        .eq('rol', 'atleta')
+        .order('nombre', ascending: true);
+
+    final lista = response as List<dynamic>;
+    return lista.map((map) => UsuarioModel.fromMap(map as Map<String, dynamic>)).toList();
+  }
 }
