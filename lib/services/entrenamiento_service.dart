@@ -5,7 +5,7 @@ import '../models/usuario_model.dart';
 class EntrenamientoService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  // Registrar entrenamiento (el que ya tienes)
+  // Registrar entrenamiento
   Future<void> registrarEntrenamiento(EntrenamientoModel entrenamiento) async {
     await _supabase.from('entrenamiento').insert(entrenamiento.toMap());
   }
@@ -20,5 +20,17 @@ class EntrenamientoService {
 
     final lista = response as List<dynamic>;
     return lista.map((map) => EntrenamientoModel.fromMap(map as Map<String, dynamic>)).toList();
+  }
+
+  // Obtener lista de atletas para el entrenador
+  Future<List<UsuarioModel>> obtenerAtletas() async {
+    final response = await _supabase
+        .from('usuario')
+        .select()
+        .eq('rol', 'atleta')
+        .order('nombre', ascending: true);
+
+    final lista = response as List<dynamic>;
+    return lista.map((map) => UsuarioModel.fromMap(map as Map<String, dynamic>)).toList();
   }
 }

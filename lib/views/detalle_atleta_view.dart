@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/usuario_model.dart';
 import '../services/diagnostico_service.dart';
 import 'consultar_entrenamientos_view.dart';
+import 'asignar_plan_atleta_view.dart';
+
 
 class DetalleAtletaView extends StatefulWidget {
   final UsuarioModel atleta;
@@ -288,6 +290,34 @@ class _DetalleAtletaViewState extends State<DetalleAtletaView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+  // Añade este método en _DetalleAtletaViewState y colócalo en el ListView:
+  Widget _buildBotonAsignarPlan(BuildContext context) {
+    return Card(
+      elevation: 2,
+      color: Colors.teal.shade50,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      child: ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: Colors.teal,
+          child: Icon(Icons.assignment_add, color: Colors.white),
+        ),
+        title: const Text('Asignar Plan de Entrenamiento', style: TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: const Text('Seleccionar rutina y ubicación de encuentro'),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 18, color: Colors.teal),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => AsignarPlanAtletaView(
+                idAtleta: widget.atleta.idUsuario,
+                idEntrenador: 'id_del_entrenador_actual', // Reemplaza por la variable de sesión activa del coach
+              ),
+            ),
+          );
+        },
       ),
     );
   }

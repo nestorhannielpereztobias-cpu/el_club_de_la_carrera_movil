@@ -8,6 +8,7 @@ class EntrenamientoModel {
   final int? tiempoMinutos;
   final String? ritmoPromedio;
   final DateTime? fechaRegistro;
+  final int? idPuntoUbicacion;
 
   EntrenamientoModel({
     this.idEntrenamiento,
@@ -19,6 +20,7 @@ class EntrenamientoModel {
     this.tiempoMinutos,
     this.ritmoPromedio,
     this.fechaRegistro,
+    this.idPuntoUbicacion,
   });
 
   Map<String, dynamic> toMap() {

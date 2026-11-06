@@ -3,6 +3,7 @@ import '../models/usuario_model.dart';
 import 'login_view.dart';
 import 'perfil_usuario_view.dart';
 import 'lista_atletas_view.dart';
+import 'mapa_ubicacion_view.dart';
 
 
 class HomeEntrenadorView extends StatelessWidget {
@@ -110,16 +111,6 @@ class HomeEntrenadorView extends StatelessWidget {
                       title: 'Mis\nAtletas',
                       color: Colors.teal,
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Próximamente: Lista de atletas')),
-                        );
-                      },
-                    ),
-                    _buildMenuCard(
-                      icon: Icons.groups_rounded,
-                      title: 'Mis\nAtletas',
-                      color: Colors.teal,
-                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -129,12 +120,15 @@ class HomeEntrenadorView extends StatelessWidget {
                       },
                     ),
                     _buildMenuCard(
-                      icon: Icons.assignment_outlined,
-                      title: 'Asignar\nPlan',
+                      icon: Icons.map_outlined,
+                      title: 'Puntos de\nEntrenamiento',
                       color: Colors.indigo,
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Próximamente: Asignación de entrenamientos')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MapaUbicacionView(),
+                          ),
                         );
                       },
                     ),
