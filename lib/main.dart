@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart'; // <-- 1. Importa esto
 import 'views/login_view.dart';
 
 Future<void> main() async {
@@ -8,11 +9,14 @@ Future<void> main() async {
 
   await dotenv.load(fileName: ".env");
 
+  // 2. Inicializa los datos de localización para el español
+  await initializeDateFormatting('es', null);
+
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? '',
     publishableKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
   );
- 
+  
   runApp(const MyApp());
 }
 

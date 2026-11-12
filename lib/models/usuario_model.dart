@@ -6,6 +6,7 @@ class UsuarioModel {
   final DateTime? fechaNacimiento;
   final String? genero;
   final String rol;
+  final String? fotoUrl;
 
   UsuarioModel({
     required this.idUsuario,
@@ -15,6 +16,7 @@ class UsuarioModel {
     this.fechaNacimiento,
     this.genero,
     required this.rol,
+    this.fotoUrl,
   });
 
   factory UsuarioModel.fromMap(Map<String, dynamic> map) {

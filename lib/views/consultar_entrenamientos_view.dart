@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/entrenamiento_model.dart';
 import '../services/entrenamiento_service.dart';
+import 'package:intl/intl.dart';
+
 
 class ConsultarEntrenamientosView extends StatefulWidget {
   final String idUsuario;
@@ -105,8 +107,7 @@ class _ConsultarEntrenamientosViewState extends State<ConsultarEntrenamientosVie
               separatorBuilder: (_, __) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 final item = entrenamientos[index];
-                final fechaFormateada =
-                    "${item.fecha.day.toString().padLeft(2, '0')}/${item.fecha.month.toString().padLeft(2, '0')}/${item.fecha.year}";
+                final fechaFormateada = DateFormat('EEEE, d ' 'de' ' MMMM yyyy', 'es').format(item.fecha);
 
                 return Card(
                   elevation: 2,
