@@ -1,0 +1,360 @@
+
+import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+import '../models/usuario_model.dart';
+import 'consultar_entrenamientos_view.dart';
+import 'login_view.dart';
+import 'perfil_usuario_view.dart';
+import 'registrar_entrenamiento_view.dart';
+import 'cuestionario_diagnostico_view.dart';
+import 'mi_plan_view.dart';
+import 'consultar_respuestas_diagnostico_view.dart';
+
+class HomeAtletaView extends StatelessWidget {
+  final UsuarioModel usuario;
+
+  const HomeAtletaView({
+    super.key,
+    required this.usuario,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('El Club de la Carrera'),
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Cerrar sesión',
+
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const LoginView(),
+                ),
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      ),
+
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+
+              // TARJETA DE BIENVENIDA
+              Card(
+                elevation: 2,
+
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+
+                color: Colors.deepOrange.shade50,
+
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => PerfilUsuarioView(
+                          usuario: usuario,
+                        ),
+                      ),
+                    );
+                  },
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+
+                    child: Row(
+                      children: [
+
+                        // FOTO DE PERFIL
+                        CachedNetworkImage(
+                          imageUrl: usuario.fotoUrl ?? '',
+
+                          imageBuilder: (context, imageProvider) {
+                            return CircleAvatar(
+                              radius: 30,
+                              backgroundImage: imageProvider,
+                            );
+                          },
+
+                          placeholder: (context, url) {
+                            return const CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.deepOrange,
+                              child: SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            );
+                          },
+
+                          errorWidget: (context, url, error) {
+                            return CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.deepOrange,
+
+                              child: Text(
+                                usuario.nombre.isNotEmpty
+                                    ? usuario.nombre[0].toUpperCase()
+                                    : 'A',
+
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+
+                        const SizedBox(width: 16),
+
+                        // INFORMACIÓN DEL USUARIO
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+
+                              Text(
+                                '¡Hola, ${usuario.nombre}!',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+
+                              const SizedBox(height: 4),
+
+                              Text(
+                                'Rol: ${usuario.rol.toUpperCase()}',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.deepOrange.shade800,
+                                ),
+                              ),
+
+                              Text(
+                                usuario.correo,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 18,
+                          color: Colors.deepOrange,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 28),
+
+              // TÍTULO
+              const Text(
+                'Acciones Rápidas',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              // MENÚ PRINCIPAL
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 14,
+                  mainAxisSpacing: 14,
+                  childAspectRatio: 1.05,
+
+                  children: [
+
+                    // REGISTRAR ENTRENAMIENTO
+                    _buildMenuCard(
+                      icon: Icons.add_circle_outline,
+                      title: 'Registrar\nEntrenamiento',
+                      color: Colors.blue,
+
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => RegistrarEntrenamientoView(
+                              idUsuario: usuario.idUsuario,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    // CONSULTAR ENTRENAMIENTOS
+                    _buildMenuCard(
+                      icon: Icons.history_rounded,
+                      title: 'Consultar\nEntrenamientos',
+                      color: Colors.purple,
+
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ConsultarEntrenamientosView(
+                              idUsuario: usuario.idUsuario,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    // CUESTIONARIO DIAGNÓSTICO
+                    _buildMenuCard(
+                      icon: Icons.assignment_outlined,
+                      title: 'Cuestionario\nDiagnóstico',
+                      color: Colors.teal,
+
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => CuestionarioDiagnosticoView(
+                              idUsuario: usuario.idUsuario,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    // CONSULTAR DIAGNÓSTICO
+                    _buildMenuCard(
+                      icon: Icons.assignment_outlined,
+                      title: 'Consultar\nDiagnóstico',
+                      color: Colors.teal,
+
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ConsultarRespuestasDiagnosticoView(
+                              idUsuario: usuario.idUsuario,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    // MI PLAN DE ENTRENAMIENTO
+                    _buildMenuCard(
+                      icon: Icons.fitness_center_rounded,
+                      title: 'Mi Plan de\nEntrenamiento',
+                      color: Colors.orange,
+
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => MiPlanView(
+                              idUsuario: usuario.idUsuario,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // CONSTRUIR TARJETAS DEL MENÚ
+  Widget _buildMenuCard({
+    required IconData icon,
+    required String title,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 2,
+
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children: [
+
+              CircleAvatar(
+                radius: 26,
+                backgroundColor: color.withOpacity(0.15),
+
+                child: Icon(
+                  icon,
+                  size: 28,
+                  color: color,
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              Text(
+                title,
+                textAlign: TextAlign.center,
+
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
