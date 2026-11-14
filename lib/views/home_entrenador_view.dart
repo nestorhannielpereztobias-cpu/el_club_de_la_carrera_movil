@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/usuario_model.dart';
 import 'login_view.dart';
 import 'perfil_usuario_view.dart';
 import 'lista_atletas_view.dart';
 import 'mapa_ubicacion_view.dart';
+
 
 
 class HomeEntrenadorView extends StatelessWidget {
@@ -59,36 +62,18 @@ class HomeEntrenadorView extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          radius: 28,
-                          backgroundColor: Colors.deepOrange,
-                          child: Text(
-                            usuario.nombre.isNotEmpty ? usuario.nombre[0].toUpperCase() : 'C',
-                            style: const TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
+                        construirAvatarDestacado(usuario.fotoUrl, usuario.nombre),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Hola, ${usuario.nombre}',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const Text('Atleta activo', style: TextStyle(color: Colors.grey)),
+                          ],
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '¡Hola, ${usuario.nombre}!',
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Rol: ${usuario.rol.toUpperCase()}',
-                                style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                usuario.correo,
-                                style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Icon(Icons.chevron_right, color: Colors.deepOrange),
                       ],
                     ),
                   ),
@@ -142,6 +127,67 @@ class HomeEntrenadorView extends StatelessWidget {
     );
   }
 
+  Widget construirAvatarDestacado(String? urlFoto, String nombre) {
+  return CachedNetworkImage(
+    imageUrl: urlFoto ?? 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    imageBuilder: (context, imageProvider) => Container(
+      width: 70,
+      height: 70,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.deepOrange, width: 3), // Borde llamativo que resalta
+        image: DecorationImage(
+          image: imageProvider,
+          fit: BoxFit.cover,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.deepOrange.withValues(alpha: 0.4),
+            blurRadius: 10,
+            offset: const Offset(0, 4), // Sombra flotante para dar efecto 3D
+          ),
+        ],
+      ),
+    ),
+    placeholder: (context, url) => Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: Container(
+        width: 70,
+        height: 70,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+      ),
+    ),
+    errorWidget: (context, url, error) => Container(
+      width: 70,
+      height: 70,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.deepOrange,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.deepOrange.withOpacity(0.4),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          nombre.isNotEmpty ? nombre[0].toUpperCase() : 'A',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+  );
+}
   Widget _buildMenuCard({
     required IconData icon,
     required String title,
