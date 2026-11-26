@@ -4,6 +4,7 @@ import '../services/auth_service.dart';
 import '../models/usuario_model.dart';
 import 'home_atleta_view.dart';
 import 'home_entrenador_view.dart';
+import 'admin_roles_view.dart';
 import 'registro_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -33,21 +34,19 @@ class _LoginViewState extends State<LoginView> {
       );
 
       if (usuario != null && mounted) {
-        if (usuario.rol.trim().toLowerCase() == 'entrenador') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) => HomeEntrenadorView(usuario: usuario),
-            ),
-          );
+        final rol = usuario.rol.trim().toLowerCase();
+        Widget destino;
+        if (rol == 'administrador') {
+          destino = AdminRolesView(usuario: usuario);
+        } else if (rol == 'entrenador') {
+          destino = HomeEntrenadorView(usuario: usuario);
         } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) => HomeAtletaView(usuario: usuario),
-            ),
-          );
+          destino = HomeAtletaView(usuario: usuario);
         }
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => destino),
+        );
       }
     } catch (e) {
       if (mounted) {
